@@ -1,0 +1,232 @@
+using MelonLoader;
+using Il2CppScheduleOne.Audio;
+using Il2CppScheduleOne.UI.Phone;
+using System;
+
+using UnityEngine;
+using Il2CppScheduleOne.Persistence;
+using UnityEngine.Events;
+using Il2CppScheduleOne.Property;
+
+[assembly: MelonInfo(typeof(Schedule1ModTest1.Test), "Schedule1ModTest1", "1.0.0", "cmadev", null)]
+[assembly: MelonGame("TVGS", "Schedule I")]
+
+namespace Schedule1ModTest1
+{
+    public class Test : MelonMod
+    {
+        private bool isPhoneOpen = false;
+        private Rect _appIconRect = new Rect(20, 20, 200, 200);
+
+        public override void OnInitializeMelon()
+        {
+            LoggerInstance.Msg("Iniciou!!!");
+        }
+
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            if (sceneName == "Main")
+            {
+                try
+                {
+                    LoggerInstance.Msg("na main!!!");
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Error($"Failed to find base Phone: {ex}");
+                }
+
+            }
+        }
+
+        public override void OnUpdate()
+        {
+            MelonLogger.Msg($"Active APP: {Phone.ActiveApp.ToString()}");
+
+        }
+        public override void OnGUI()
+        {
+            if (Phone.Instance == null || Phone.Instance.IsOpen == true)
+            {
+                return;
+            }
+
+            GUI.skin.window.fontSize = 14;
+            DrawAppIcon();
+        }
+        public void DrawAppIcon()
+        {
+            MelonLogger.Msg($"Active APP: {Phone.ActiveApp.ToString()}");
+            //GUILayout.BeginVertical();
+
+            float width = 200f;
+            float height = 100f;
+            float posX = (Screen.width - width) / 2f;
+            float posY = (Screen.height - height) / 2f;
+
+            if (GUI.Button(new Rect(posX, posY, width, height), "Music Player"))
+            {
+                MelonLogger.Msg($"Test1");
+            }
+
+        }
+    }
+}
+
+
+
+        private void FillDealersInventory(Il2CppScheduleOne.ItemFramework.ItemInstance item)
+        {
+            var dealers = GameObject.FindObjectsOfType<Dealer>();
+            foreach (var dealer in dealers)
+            {
+                if (dealer.IsRecruited)
+                {
+                    
+                    if (dealer.GetTotalInventoryItemCount() == 0 && item.Category == EItemCategory.Product)
+                    {
+                        dealer.AddItemToInventory(item);
+                    }
+                }
+            }
+        }
+
+using MelonLoader;
+using Il2CppScheduleOne.Audio;
+using Il2CppScheduleOne.UI.Phone;
+using System;
+
+using UnityEngine;
+using Il2CppScheduleOne.Persistence;
+using UnityEngine.Events;
+using Il2CppScheduleOne.Property;
+using UnityEngine.Windows;
+using Il2CppScheduleOne.Economy;
+using Il2CppScheduleOne.Vehicles;
+using Il2CppScheduleOne.PlayerScripts;
+using Il2CppScheduleOne.ItemFramework;
+using Il2CppScheduleOne.NPCs;
+
+[assembly: MelonInfo(typeof(Schedule1ModTest1.Test), "Schedule1ModTest1", "1.0.0", "cmadev", null)]
+[assembly: MelonGame("TVGS", "Schedule I")]
+
+namespace Schedule1ModTest1
+{
+    public class Test : MelonMod
+    {
+        private bool showText = false;
+        
+        public override void OnInitializeMelon()
+        {
+            LoggerInstance.Msg("Iniciou!!!");
+        }
+
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            if (sceneName == "Main")
+            {
+                try
+                {
+                    LoggerInstance.Msg("na main!!!");
+                }
+                catch (Exception ex)
+                {
+                    MelonLogger.Error($"Failed to find base Phone: {ex}");
+                }
+
+            }
+        }
+
+        public override void OnGUI()
+        {
+            if (showText)
+            {
+                var count = 10;
+
+                var dealers = GameObject.FindObjectsOfType<Dealer>();
+                foreach (var dealer in dealers)
+                {
+                    if (dealer.IsRecruited)
+                    {
+                        count += 20;
+                        GUI.Label(new Rect(50, count, 300, 30), $"Dealer name: {dealer.FirstName} - {dealer.GetTotalInventoryItemCount()}");
+                    }
+                }
+
+                count += 10;
+                GUI.Label(new Rect(50, count, 300, 30), "====================================");
+
+                foreach (var item in Player.Local.Inventory)
+                {
+                    count += 40;
+                    GUI.Label(new Rect(50, count, 300, 300), $"Item: {item.ItemInstance.Name} - {item.ItemInstance.Category}");
+                }
+            }
+        }
+
+        public override void OnUpdate()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.I))
+            {
+                showText = !showText;      
+                NPC npc = new NPC();
+                npc.name = "Douglas";
+                npc.Avatar.appliedHair
+            }
+        }
+
+
+        private void FillDealersInventory(Il2CppScheduleOne.ItemFramework.ItemInstance item)
+        {
+            var dealers = GameObject.FindObjectsOfType<Dealer>();
+            foreach (var dealer in dealers)
+            {
+                if (dealer.IsRecruited)
+                {
+                    
+                    if (dealer.GetTotalInventoryItemCount() == 0 && item.Category == EItemCategory.Product)
+                    {
+                        dealer.AddItemToInventory(item);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+Ambos estavam em suas casas.
+[15:14:45.554] [Schedule1ModTest1] ============================================================
+[15:14:45.554] [Schedule1ModTest1] dealer name: Brad 
+[15:14:45.554] [Schedule1ModTest1] dealer.HomeEvent.ActionName: Stay in Building   
+[15:14:45.555] [Schedule1ModTest1] Dealer Movement enabled: True             
+[15:14:45.555] [Schedule1ModTest1] dealer.Movement.CanMove(): True          
+[15:14:45.555] [Schedule1ModTest1] dealer.Movement.isActiveAndEnabled: True    
+[15:14:45.557] [Schedule1ModTest1] dealer.Movement.IsSpawned: True              
+[15:14:45.558] [Schedule1ModTest1] dealer.Movement.IsPaused: False              
+[15:14:45.558] [Schedule1ModTest1] ============================================================ 
+[15:14:45.558] [Schedule1ModTest1] ============================================================  
+[15:14:45.558] [Schedule1ModTest1] dealer name: Benji                                              
+[15:14:45.558] [Schedule1ModTest1] dealer.HomeEvent.ActionName: Stay in Building                  
+[15:14:45.558] [Schedule1ModTest1] Dealer Movement enabled: True                                 
+[15:14:45.558] [Schedule1ModTest1] dealer.Movement.CanMove(): False                              
+[15:14:45.558] [Schedule1ModTest1] dealer.Movement.isActiveAndEnabled: True                      
+[15:14:45.558] [Schedule1ModTest1] dealer.Movement.IsSpawned: True                         
+[15:14:45.558] [Schedule1ModTest1] dealer.Movement.IsPaused: False                        
+[15:14:45.558] [Schedule1ModTest1] ============================================================
+
+            //List<Dealer> activeDealers = GetActiveDealers();
+            //foreach (var dealer in activeDealers)
+            //{
+            //    LoggerInstance.Msg("============================================================");
+            //    LoggerInstance.Msg($"dealer name: {dealer.FirstName}");
+            //    LoggerInstance.Msg($"dealer.HomeEvent.ActionName: {dealer.HomeEvent.ActionName}");
+            //    LoggerInstance.Msg($"Dealer Movement enabled: {dealer.Movement.enabled}");
+            //    LoggerInstance.Msg($"dealer.Movement.CanMove(): {dealer.Movement.CanMove()}");
+            //    LoggerInstance.Msg($"dealer.Movement.isActiveAndEnabled: {dealer.Movement.isActiveAndEnabled}");
+            //    LoggerInstance.Msg($"dealer.Movement.IsSpawned: {dealer.Movement.IsSpawned}");
+            //    LoggerInstance.Msg($"dealer.Movement.IsPaused: {dealer.Movement.IsPaused}");
+            //    LoggerInstance.Msg($"dealer.actions.name: {dealer.actions.name}");
+            //    LoggerInstance.Msg($"dealer.Movement.IsMoving: {dealer.Movement.IsMoving}");
+            //    LoggerInstance.Msg("============================================================");
+            //}
